@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BotUI - Hello World</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/botui/build/botui-theme-default.css" />
+</head>
+<body>
+  <div class="botui-app-container" id="hello-world" style="min-height:300px; padding:2px 6px 4px 6px; background-color: rgba(242, 242, 242,0.5); border-radius: 10px; 2px solid">
+    <center><h4>与 TJYS 对话中. . .</h4></center>
+    <bot-ui>
+      <center>
+        <div " background-image: url(https://cdn.jsdelivr.net/gh/Fog-Forest/cdn@1.7/botui/loading.svg); background-repeat: no-repeat;background-size: 10em;background-position: center;height: 10em;"></div>
+        <p>Loading</p>
+      </center>
+    </bot-ui>
+  </div>
+  <script src="https://cdn.jsdelivr.net/vue/latest/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/botui/build/botui.js"></script>
+  <script>
+    var botui = new BotUI('hello-world');
+      botui.message.add({
+    delay: 2000,
+    loading: true,
+        content: "Hi, 你好！👋 "
+    }).then(function() {
+    return botui.message.add({
+        delay: 1000,
+        content: "我是这个网站的博主,一个可爱的蓝孩子~😊"
+    })
+}).then(function() {
+    return botui.message.add({
+        delay: 1500,
+        content: "我在业余时间玩一下网站！😎"
+    })
+      }).then(function () {
+        botui.message.add({
+          delay: 2000,
+    loading: true,
+          content: "这里是云生博客，你的名字叫什么呢？"
+        }).then(function(){
+      botui.action.text({
+        action:{placeholder: "告诉我你的名字吧！"}
+      }).then(function(res){
+      botui.message.add({
+        delay: 2000,
+        loading: true,
+          content: "Oh，欢迎"+res.value
+      }).then(function(){
+        botui.action.button({
+          delay:1600,
+          action: [{
+            text: "然后呢？🤔",
+            value: "sure"
+          },{
+            text: "少废话！😏",
+            value: "skip"
+          }]
+        }).then(function(res){
+          if(res.value == "sure"){
+            sure();
+          }
+          if(res.value == "skip"){
+            return botui.message.bot({
+            delay: 1500,
+            content: "![告辞](https://cdn.jsdelivr.net/gh/Qikaile/cdn/img/Hd33fe77ff56f48e4b988d6c4f9091551S.jpg)"
+        })
+          }
+        })
+      })
+      })
+        })
+      });
+      var sure = function() {
+    botui.message.bot({
+        delay: 1500,
+        content: "我现在是一名在读的机械工程专业的研究生"
+    }).then(function() {
+        return botui.message.bot({
+            delay: 1500,
+            content: "在寒假的时候就想着拥有属于自己的博客,并且对计算机方面有着格外感兴趣。"
+        })
+    }).then(function() {
+        return botui.message.bot({
+            delay: 2000,
+            content: "略懂HTML/CSS/JavaScript，偶尔也折腾PHP、Python"
+        })
+    }).then(function() {
+        return botui.message.bot({
+            delay: 1800,
+            content: "喜欢折腾，热爱折腾，目前正在计算机的道上探索中"
+        })
+    }).then(function() {
+        return botui.action.button({
+            delay: 1500,
+            action: [{
+                text: "为什么叫 TJYS 呢？🤔 ",
+                value: "next"
+            }]
+        })
+    }).then(function(res) {
+        return botui.message.bot({
+            delay: 2000,
+            content: "emmm..这应该是我在上大学期间给自己QQ名的一个简写吧！"
+        })
+    }).then(function(res) {
+        return botui.message.bot({
+            delay: 1500,
+            content: "那么，相遇就是缘分，赏个赞吧 😇 "
+        })
+    });
+};
+  </script>
+</body>
+</html>
